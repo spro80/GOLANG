@@ -43,11 +43,12 @@ func TestOperationWithFunctions_MultiplicarNumeros(t *testing.T) {
 
 func TestOperationWithFunctions_DividirNumeros(t *testing.T) {
 		
-		dividir, _ :=  dividirNumeros( 100, 4 )
-		divisionExpected := 25
+		dividir, _ :=  dividirNumeros( 500, 10 )
+		var divisionExpected float64
+		divisionExpected = 50
 
 		if dividir != divisionExpected {
-			t.Errorf("El Resultado de la Division es: [%d] y se esperaba [%d] ",dividir, divisionExpected )
+			t.Errorf("El Resultado de la Division es: [%f] y se esperaba [%f] ",dividir, divisionExpected )
 		}
 				
 }

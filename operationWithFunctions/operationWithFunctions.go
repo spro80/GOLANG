@@ -4,6 +4,8 @@ package main
 
 import(
 	"fmt"
+	"errors"
+	"reflect"
 )
 
 
@@ -23,46 +25,35 @@ func main(){
 	minuendo= 100
 	sustraendo= 55
 
-
 	//Operations: Multiplicacion
 	var producto1 int
 	var producto2 int
 	producto1 = 24
 	producto2 = 2
-	//multiplicacion = producto1*producto2
-	//fmt.Println("Multiplicacion: ");
-	//fmt.Println( multiplicacion );
 
 	//Operations: Division
-	var dividendo int
-	var divisor int
+	var dividendo float64
+	var divisor float64
 	dividendo = 500
 	divisor = 0
-/*	//division = dividendo / divisor
-	//fmt.Println("La division es: ");
-	//fmt.Println( division )
-*/
 
 	sumaTotal := sumarNumeros( sumando1, sumando2)
-	fmt.Println("La Suma Total es: ");
-	fmt.Println( sumaTotal );
+	fmt.Println("    La Suma Total es: ", sumaTotal)
 
 	resta := restarNumeros( minuendo, sustraendo)
-	fmt.Println("La resta es:")
-	fmt.Println( resta )
+	fmt.Println("    La resta es:", resta)
 
 	multiplicacion := multiplicarNumeros( producto1, producto2 )
-	fmt.Println("La Multiplicacion es:");
-	fmt.Println( multiplicacion );
+	fmt.Println("    La Multiplicacion es:", multiplicacion)
 
-	division, error := dividirNumeros( dividendo, divisor)
-	if error == -1 {
-		fmt.Println("El error es -1, no se puede dividir por cero!!!");
+	division, err := dividirNumeros( dividendo, divisor)
+	if err == nil {
+		fmt.Println( reflect.TypeOf(division) )
+		fmt.Println("    La Division es: ", division)
 	}else {
-		fmt.Println("La division es correcta.")
-		fmt.Println("La Division es: ");
-		fmt.Println( division )
+		fmt.Println( err )
 	}
+
 
 	fmt.Println("Saliendo de metodo main...")
 }
@@ -81,24 +72,23 @@ func multiplicarNumeros( producto1 int, producto2 int) int{
 	return producto1 * producto2
 }
 
-func dividirNumeros( dividendo int, divisor int) (int, int){
+func dividirNumeros( dividendo float64, divisor float64) (float64, error){
 
-	var division int
+	fmt.Println( "Dividendo: ",dividendo )
+	fmt.Println( "Divisor: ",divisor )
+
+	var division float64
 	division = 0
 
-	var errors int
-	errors = 0
-
-
-	if divisor == 0{
+	if divisor == 0 {
 		fmt.Println("Error al Dividir, el Divisor no puede ser 0.");
-		errors = -1
+		return 0, errors.New( fmt.Sprintf("Can't divide %f by zero", dividendo) )
 	}else{
-		division= dividendo /divisor
+		division= dividendo / divisor
 	}
 
 
-	return division, errors
+	return division, nil
 }
 
 func Imprimir( texto string ) string{
